@@ -19,5 +19,14 @@ pipeline {
                 sh 'npm run build'
             }
         }
+
+        stage('Deploy') {
+            steps {
+                sh '''
+                pkill -f "node server.js" || true
+                nohup npm start > app.log 2>&1 &
+                '''
+            }
+        }
     }
 }
